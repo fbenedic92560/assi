@@ -12,12 +12,14 @@ package InstructionObject;
 public class InstructionReadValidator extends InstructionValidator {
     @Override
     public Boolean validate(String instruction) {
-        String[] elementsInstruction = instruction.split(" .");
+        String operatorInstruction;
+        String[] elementsInstruction = instruction.split(" ");
         if (elementsInstruction.length != 3) {
             System.out.println("Sentencia READ incorrecta");
             return Boolean.FALSE;
         }
-        if (elementsInstruction[0].toLowerCase() != "READ") {
+        operatorInstruction = elementsInstruction[0];
+        if (!"READ".equals(operatorInstruction.toUpperCase())) {
             System.out.println("Sentencia no reconocida");
             return Boolean.FALSE;
         }
