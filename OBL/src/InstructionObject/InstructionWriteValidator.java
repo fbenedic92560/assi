@@ -12,6 +12,16 @@ package InstructionObject;
 public class InstructionWriteValidator extends InstructionValidator {
     @Override
     public Boolean validate(String instruction) {
-        return Boolean.FALSE;
-    }
+        String operatorInstruction;
+        String[] elementsInstruction = instruction.split(" ");
+        if (elementsInstruction.length != 4) {
+            System.out.println("Sentencia WRITE incorrecta");
+            return Boolean.FALSE;
+        }
+        operatorInstruction = elementsInstruction[0];
+        if (!"WRITE".equals(operatorInstruction.toUpperCase())) {
+            System.out.println("Sentencia no reconocida");
+            return Boolean.FALSE;
+        }
+        return Boolean.TRUE;    }
 }
