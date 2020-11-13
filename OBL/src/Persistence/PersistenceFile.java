@@ -19,30 +19,45 @@ import java.util.logging.Logger;
 public class PersistenceFile implements Persistence {
     BufferedReader bufferedReader;
     
+    public PersistenceFile() {
+        this.bufferedReader = null;
+    }
+    
     @Override
-    public void openPersistence(String stringPersistence) {
+    public Boolean openPersistence(String stringPersistence) {
         try {
             File file = new File(stringPersistence);
             this.bufferedReader = new BufferedReader(new FileReader(file));
+            return Boolean.TRUE;
         } catch (IOException ex) {
-            ex.printStackTrace();
+            Logger.getLogger(PersistenceFile.class.getName()).log(Level.SEVERE, null, ex);
+            return Boolean.FALSE;
         }
     }
     @Override
     public String retrieveOneLine() {
-        String line;
-        try {
-            if (-1 != (line = this.bufferedReader.readLine())) {
-                return null;
-            } else {
-                return line;
+        String lineBufferedReader;
+        String line = null;
+        if (this.bufferedReader != null) {
+            try {
+                lineBufferedReader = this.bufferedReader.readLine();
+                if (lineBufferedReader != null) {
+                    line = lineBufferedReader;
+                }
+            } catch (IOException ex) {
+                Logger.getLogger(PersistenceFile.class.getName()).log(Level.SEVERE, null, ex);
             }
-        } catch (IOException ex) {
-            Logger.getLogger(PersistenceFile.class.getName()).log(Level.SEVERE, null, ex);
         }
+        return line;
     }
     @Override
-    public void closePersistence() {
-        this.bufferedReader.close();
+    public Boolean closePersistence() {
+        try {
+            this.bufferedReader.close();
+            return Boolean.TRUE;
+        } catch (IOException ex) {
+            Logger.getLogger(PersistenceFile.class.getName()).log(Level.SEVERE, null, ex);
+            return Boolean.FALSE;
+        }
     }
 }

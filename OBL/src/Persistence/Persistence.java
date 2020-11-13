@@ -10,7 +10,7 @@ package Persistence;
  * @author Usuario
  */
 public interface Persistence {
-    public void openPersistence(String stringPersistence);
+    public Boolean openPersistence(String stringPersistence);
     public String retrieveOneLine();
-    public void closePersistence();
+    public Boolean closePersistence();
 }
