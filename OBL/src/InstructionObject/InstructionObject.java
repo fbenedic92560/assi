@@ -7,15 +7,31 @@ package InstructionObject;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  *
  * @author Usuario
  */
 public class InstructionObject {
-    private List<InstructionValidator> listOfInstructionValidatorsa;
+    private List<InstructionValidator> listOfInstructionValidators;
     
     public InstructionObject() {
-        this.listOfInstructionValidatorsa = new ArrayList<>();
+        this.listOfInstructionValidators = new ArrayList<>();
+        this.listOfInstructionValidators.add(new InstructionReadValidator());
+        this.listOfInstructionValidators.add(new InstructionWriteValidator());
+    }
+    
+    public Boolean analizeInstruction(String instruction) {
+        Boolean resultValidation;
+        
+        resultValidation = Boolean.FALSE;
+        for (InstructionValidator validator : this.listOfInstructionValidators) {
+            if (Objects.equals(validator.validate(instruction), Boolean.TRUE)) {
+                resultValidation = Boolean.TRUE;
+                break;
+            }
+        }
+        return resultValidation;
     }
 }

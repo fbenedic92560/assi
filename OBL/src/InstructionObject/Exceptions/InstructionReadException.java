@@ -5,16 +5,20 @@
  */
 package InstructionObject.Exceptions;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  *
  * @author Usuario
  */
 public class InstructionReadException extends Exception {
     public InstructionReadException(String message) {
-        super(message);
+        Logger.getLogger(InstructionReadException.class.getName()).log(Level.INFO, message);
     }
 
     public InstructionReadException(String message, Throwable cause) {
         super(message, cause);
+        Logger.getLogger(InstructionReadException.class.getName()).log(Level.SEVERE, message, cause);
     }
 }

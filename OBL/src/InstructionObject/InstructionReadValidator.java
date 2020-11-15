@@ -15,30 +15,24 @@ import java.util.logging.Logger;
  */
 public class InstructionReadValidator extends InstructionValidator {
     
-    @Override
-    public Boolean validate(String instruction) {
-        String operatorInstruction;
-        String[] elementsInstruction = instruction.split(" ");
+    private static final String verb = "READ";
         
+    @Override
+    public Boolean validate(String instruction) {     
+        if (!instruction.toUpperCase().contains(verb)) {
+            return Boolean.FALSE;
+        }
+
+        String[] elementsInstruction = instruction.split(" ");
         try {
             if (elementsInstruction.length != 3) {
                 throw new InstructionReadException("Sentencia READ incorrecta");
             }
         } catch (InstructionReadException ex) {
-            Logger.getLogger(InstructionReadValidator.class.getName()).log(Level.SEVERE, null, ex);
             return Boolean.FALSE;
         }
-        
-        operatorInstruction = elementsInstruction[0];
-        try {
-            if (!"READ".equals(operatorInstruction.toUpperCase())) {
-                throw new InstructionReadException("Sentencia no reconocida");
-            }
-        } catch (InstructionReadException ex) {
-            Logger.getLogger(InstructionReadValidator.class.getName()).log(Level.SEVERE, null, ex);
-            return Boolean.FALSE;
-        }
-        
+
         return Boolean.TRUE;
     }
+    
 }
