@@ -7,6 +7,7 @@ package obl;
 
 import ObjectManager.ObjectManager;
 import ObjectManager.Object;
+import InstructionObject.*;
 
 /**
  *
@@ -21,8 +22,11 @@ public class OBL {
     public static void main(String[] args) throws Exception {
         //some tests
         ObjectManager anObjectManager = new ObjectManager();
+        InstructionObject anInstructionObject = new InstructionObject();
+        
         anObjectManager.addObject(new Object("test", 1, new java.lang.Object()));
         anObjectManager.addObject(new Object("test2", 0, new java.lang.Object()));
+        
         System.out.println(anObjectManager.read("test"));
         anObjectManager.write("test2", 0);
         System.out.println(anObjectManager.read("test"));

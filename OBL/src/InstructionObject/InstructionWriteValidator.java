@@ -5,23 +5,38 @@
  */
 package InstructionObject;
 
+import InstructionObject.Exceptions.InstructionWriteException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  *
  * @author Usuario
  */
 public class InstructionWriteValidator extends InstructionValidator {
+    
     @Override
     public Boolean validate(String instruction) {
         String operatorInstruction;
         String[] elementsInstruction = instruction.split(" ");
-        if (elementsInstruction.length != 4) {
-            System.out.println("Sentencia WRITE incorrecta");
+        try {
+            if (elementsInstruction.length != 4) {
+                throw new InstructionWriteException("Sentencia WRITE incorrecta");
+            }
+        } catch (InstructionWriteException ex) {
+            Logger.getLogger(InstructionWriteValidator.class.getName()).log(Level.SEVERE, null, ex);
             return Boolean.FALSE;
         }
+        
         operatorInstruction = elementsInstruction[0];
+        try {
         if (!"WRITE".equals(operatorInstruction.toUpperCase())) {
-            System.out.println("Sentencia no reconocida");
+            throw new InstructionWriteException("Sentencia no reconocida");
+        }
+        } catch (InstructionWriteException ex) {
+            Logger.getLogger(InstructionWriteValidator.class.getName()).log(Level.SEVERE, null, ex);
             return Boolean.FALSE;
         }
-        return Boolean.TRUE;    }
+        return Boolean.TRUE;
+    }
 }
