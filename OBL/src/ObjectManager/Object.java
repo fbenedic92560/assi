@@ -20,7 +20,7 @@ public class Object {
     }
 
     public Object(String name, int value, SensibilityLabel sensibilityLabel) {
-        this.name = name;
+        this.name = name.toLowerCase();
         this.value = value;
         this.sensibilityLabel = sensibilityLabel;
     }
@@ -30,7 +30,7 @@ public class Object {
     }
 
     public void setName(String name) {
-        this.name = name;
+        this.name = name.toLowerCase();
     }
 
     public int getValue() {
@@ -61,7 +61,7 @@ public class Object {
             return false;
         }
         final Object other = (Object) obj;
-        if (!Objects.equals(this.name, other.name)) {
+        if (!Objects.equals(this.name.toLowerCase(), other.name.toLowerCase())) {
             return false;
         }
         return true;
