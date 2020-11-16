@@ -1,10 +1,6 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package obl;
 
+import Labeling.SensibilityLabel;
 import ObjectManager.ObjectManager;
 import ObjectManager.Object;
 
@@ -21,8 +17,8 @@ public class OBL {
     public static void main(String[] args) throws Exception {
         //some tests
         ObjectManager anObjectManager = new ObjectManager();
-        anObjectManager.addObject(new Object("test", 1, new java.lang.Object()));
-        anObjectManager.addObject(new Object("test2", 0, new java.lang.Object()));
+        anObjectManager.addObject(new Object("test", 1, new SensibilityLabel()));
+        anObjectManager.addObject(new Object("test2", 0, new SensibilityLabel()));
         System.out.println(anObjectManager.read("test"));
         anObjectManager.write("test2", 0);
         System.out.println(anObjectManager.read("test"));

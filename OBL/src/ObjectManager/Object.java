@@ -1,5 +1,6 @@
 package ObjectManager;
 
+import Labeling.SensibilityLabel;
 import java.util.Objects;
 
 /**
@@ -10,18 +11,18 @@ public class Object {
 
     private String name;
     private int value;
-    private java.lang.Object sensibilityLevel;//change for SensibilityLevel when created
+    private SensibilityLabel sensibilityLabel;
 
     public Object() {//check this default values
         this.name = "";
         this.value = 0;
-        this.sensibilityLevel = new java.lang.Object();
+        this.sensibilityLabel = new SensibilityLabel();
     }
 
-    public Object(String name, int value, java.lang.Object sensibilityLevel) {
-        this.name = name;
+    public Object(String name, int value, SensibilityLabel sensibilityLabel) {
+        this.name = name.toLowerCase();
         this.value = value;
-        this.sensibilityLevel = sensibilityLevel;
+        this.sensibilityLabel = sensibilityLabel;
     }
 
     public String getName() {
@@ -29,7 +30,7 @@ public class Object {
     }
 
     public void setName(String name) {
-        this.name = name;
+        this.name = name.toLowerCase();
     }
 
     public int getValue() {
@@ -40,12 +41,12 @@ public class Object {
         this.value = value;
     }
 
-    public java.lang.Object getSensibilityLavel() {//change for SensibilityLevel when created
-        return this.sensibilityLevel;
+    public SensibilityLabel getSensibilityLabel() {
+        return this.sensibilityLabel;
     }
 
-    public void setSensibilityLevel(java.lang.Object sensibilityLevel) {//change for SensibilityLevel when created
-        this.sensibilityLevel = sensibilityLevel;
+    public void setSensibilityLevel(SensibilityLabel sensibilityLabel) {
+        this.sensibilityLabel = sensibilityLabel;
     }
 
     @Override
@@ -60,7 +61,7 @@ public class Object {
             return false;
         }
         final Object other = (Object) obj;
-        if (!Objects.equals(this.name, other.name)) {
+        if (!Objects.equals(this.name.toLowerCase(), other.name.toLowerCase())) {
             return false;
         }
         return true;
