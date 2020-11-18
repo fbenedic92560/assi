@@ -4,6 +4,8 @@ package Labeling;
  *
  * @author martellocauda
  */
-public class SensibilityLabel extends Label {
-    
+public enum SecurityLevel {
+    LOW,
+    MEDIUM,
+    HIGH
 }
