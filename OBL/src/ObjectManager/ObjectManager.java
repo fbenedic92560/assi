@@ -1,5 +1,6 @@
 package ObjectManager;
 
+import Labeling.SecurityLevel;
 import java.util.List;
 import java.util.ArrayList;
 import ObjectManager.Exceptions.ObjectManagerException;
@@ -9,24 +10,25 @@ import ObjectManager.Exceptions.ObjectManagerException;
  * @author martellocauda
  */
 public class ObjectManager {
-    
+
     private List<Object> objects;
-    
+
     public ObjectManager() {
         objects = new ArrayList();
     }
-    
-    public void addObject(Object object) throws ObjectManagerException {
+
+    public void addObject(String name, SecurityLevel securityLevel) throws ObjectManagerException {
+        Object object = new Object(name.toLowerCase(), securityLevel);
         if (objects.contains(object)) {
             throw new ObjectManagerException("This object already exists.");
         } else {
             objects.add(object);
         }
     }
-    
-    private Object getObjectByName(String objectName) throws ObjectManagerException {
+
+    public Object getObjectByName(String objectName) throws ObjectManagerException {
         Object wanted = objects.stream()
-                .filter(object -> objectName.equals(object.getName()))
+                .filter(object -> objectName.equals(object.getName().toLowerCase()))
                 .findAny()
                 .orElse(null);
         if (wanted == null) {
@@ -34,20 +36,12 @@ public class ObjectManager {
         }
         return wanted;
     }
-    
+
     public int read(String objectName) throws ObjectManagerException {
-        try {
-            return getObjectByName(objectName).getValue();
-        } catch (ObjectManagerException e) {
-            throw e;
-        }
+        return getObjectByName(objectName).getValue();
     }
-    
+
     public void write(String objectName, int value) throws ObjectManagerException {
-        try {
-            getObjectByName(objectName).setValue(value);
-        } catch (ObjectManagerException e) {
-            throw e;
-        }
+        getObjectByName(objectName).setValue(value);
     }
 }

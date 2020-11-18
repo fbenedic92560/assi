@@ -1,6 +1,6 @@
 package ObjectManager;
 
-import Labeling.SensibilityLabel;
+import Labeling.SecurityLevel;
 import java.util.Objects;
 
 /**
@@ -11,42 +11,44 @@ public class Object {
 
     private String name;
     private int value;
-    private SensibilityLabel sensibilityLabel;
+    private SecurityLevel securityLevel;
 
     public Object() {//check this default values
         this.name = "";
         this.value = 0;
-        this.sensibilityLabel = new SensibilityLabel();
+        this.securityLevel = SecurityLevel.HIGH;
     }
 
-    public Object(String name, int value, SensibilityLabel sensibilityLabel) {
+    public Object(String name, int value, SecurityLevel securityLevel) {
         this.name = name.toLowerCase();
         this.value = value;
-        this.sensibilityLabel = sensibilityLabel;
+        this.securityLevel = securityLevel;
+    }
+
+    public Object(String name, SecurityLevel securityLevel) {
+        this.name = name.toLowerCase();
+        this.value = 0;
+        this.securityLevel = securityLevel;
     }
 
     public String getName() {
         return this.name;
     }
 
-    public void setName(String name) {
+    void setName(String name) {
         this.name = name.toLowerCase();
     }
 
-    public int getValue() {
+    int getValue() {
         return this.value;
     }
 
-    public void setValue(int value) {
+    void setValue(int value) {
         this.value = value;
     }
 
-    public SensibilityLabel getSensibilityLabel() {
-        return this.sensibilityLabel;
-    }
-
-    public void setSensibilityLevel(SensibilityLabel sensibilityLabel) {
-        this.sensibilityLabel = sensibilityLabel;
+    public SecurityLevel getSecurityLevel() {
+        return this.securityLevel;
     }
 
     @Override

@@ -1,6 +1,6 @@
 package Subject;
 
-import Labeling.AuthorizationLabel;
+import Labeling.SecurityLevel;
 import ObjectManager.Exceptions.ObjectManagerException;
 import ObjectManager.ObjectManager;
 import Subject.Exceptions.SubjectException;
@@ -14,18 +14,18 @@ public class Subject {
 
     private String name;
     private int temp;
-    private AuthorizationLabel authorizationLabel;
+    private SecurityLevel securityLevel;
 
     public Subject() {//check this default values
         this.name = "";
         this.temp = 0;
-        this.authorizationLabel = new AuthorizationLabel();
+        this.securityLevel = SecurityLevel.LOW;
     }
 
-    public Subject(String name, AuthorizationLabel authorizationLabel) {
-        this.name = name;
+    public Subject(String name, SecurityLevel securityLevel) {
+        this.name = name.toLowerCase();
         this.temp = 0;
-        this.authorizationLabel = authorizationLabel;
+        this.securityLevel = securityLevel;
     }
 
     public String getName() {
@@ -33,7 +33,7 @@ public class Subject {
     }
 
     public void setName(String name) {
-        this.name = name;
+        this.name = name.toLowerCase();
     }
 
     public int getTemp() {
@@ -44,31 +44,8 @@ public class Subject {
         this.temp = temp;
     }
 
-    public AuthorizationLabel getAuthorizationLabel() {
-        return this.authorizationLabel;
-    }
-
-    public void setAuthorizationLevel(AuthorizationLabel authorizationLabel) {
-        this.authorizationLabel = authorizationLabel;
-    }
-
-    public int read(ObjectManager objectManager, String name) throws SubjectException {
-        int value;
-        try {
-            value = objectManager.read(name);
-        } catch (ObjectManagerException e) {
-            throw new SubjectException(e.getMessage());
-        }
-        this.temp = value;
-        return value;
-    }
-
-    public void write(ObjectManager objectManager, String name, int value) throws SubjectException {
-        try {
-            objectManager.write(name, value);
-        } catch (ObjectManagerException e) {
-            throw new SubjectException(e.getMessage());
-        }
+    public SecurityLevel getSecurityLevel() {
+        return this.securityLevel;
     }
 
     @Override
@@ -83,7 +60,7 @@ public class Subject {
             return false;
         }
         final Subject other = (Subject) obj;
-        if (!Objects.equals(this.name, other.name)) {
+        if (!Objects.equals(this.name.toLowerCase(), other.name.toLowerCase())) {
             return false;
         }
         return true;
