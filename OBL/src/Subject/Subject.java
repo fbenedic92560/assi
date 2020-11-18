@@ -1,33 +1,30 @@
-package ObjectManager;
+package Subject;
 
 import Labeling.SecurityLevel;
+import ObjectManager.Exceptions.ObjectManagerException;
+import ObjectManager.ObjectManager;
+import Subject.Exceptions.SubjectException;
 import java.util.Objects;
 
 /**
  *
  * @author martellocauda
  */
-public class Object {
+public class Subject {
 
     private String name;
-    private int value;
+    private int temp;
     private SecurityLevel securityLevel;
 
-    public Object() {//check this default values
+    public Subject() {//check this default values
         this.name = "";
-        this.value = 0;
-        this.securityLevel = SecurityLevel.HIGH;
+        this.temp = 0;
+        this.securityLevel = SecurityLevel.LOW;
     }
 
-    public Object(String name, int value, SecurityLevel securityLevel) {
+    public Subject(String name, SecurityLevel securityLevel) {
         this.name = name.toLowerCase();
-        this.value = value;
-        this.securityLevel = securityLevel;
-    }
-
-    public Object(String name, SecurityLevel securityLevel) {
-        this.name = name.toLowerCase();
-        this.value = 0;
+        this.temp = 0;
         this.securityLevel = securityLevel;
     }
 
@@ -35,16 +32,16 @@ public class Object {
         return this.name;
     }
 
-    void setName(String name) {
+    public void setName(String name) {
         this.name = name.toLowerCase();
     }
 
-    int getValue() {
-        return this.value;
+    public int getTemp() {
+        return this.temp;
     }
 
-    void setValue(int value) {
-        this.value = value;
+    public void setTemp(int temp) {
+        this.temp = temp;
     }
 
     public SecurityLevel getSecurityLevel() {
@@ -52,7 +49,7 @@ public class Object {
     }
 
     @Override
-    public boolean equals(java.lang.Object obj) {
+    public boolean equals(Object obj) {
         if (this == obj) {
             return true;
         }
@@ -62,10 +59,11 @@ public class Object {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final Object other = (Object) obj;
+        final Subject other = (Subject) obj;
         if (!Objects.equals(this.name.toLowerCase(), other.name.toLowerCase())) {
             return false;
         }
         return true;
     }
+
 }
