@@ -19,7 +19,7 @@ public class PersistenceFile implements Persistence {
     }
     
     @Override
-    public Boolean openPersistence(String stringPersistence) {
+    public Boolean openPersistence(String stringPersistence) throws IOException {
         try {
             File file = new File(stringPersistence);
             this.bufferedReader = new BufferedReader(new FileReader(file));
@@ -30,7 +30,7 @@ public class PersistenceFile implements Persistence {
         }
     }
     @Override
-    public String retrieveOneLine() {
+    public String retrieveOneLine() throws IOException {
         String lineBufferedReader;
         String line = null;
         if (this.bufferedReader != null) {
@@ -46,7 +46,7 @@ public class PersistenceFile implements Persistence {
         return line;
     }
     @Override
-    public Boolean closePersistence() {
+    public Boolean closePersistence() throws IOException {
         try {
             this.bufferedReader.close();
             return Boolean.TRUE;

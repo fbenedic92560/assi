@@ -1,11 +1,13 @@
 package Persistence;
 
+import java.io.IOException;
+
 /**
  *
  * @author Usuario
  */
 public interface Persistence {
-    public Boolean openPersistence(String stringPersistence);
-    public String retrieveOneLine();
-    public Boolean closePersistence();
+    public Boolean openPersistence(String stringPersistence) throws IOException;
+    public String retrieveOneLine() throws IOException;
+    public Boolean closePersistence() throws IOException;
 }
