@@ -1,10 +1,8 @@
 package obl;
 
-import Labeling.SecurityLevel;
-import ObjectManager.ObjectManager;
-import ObjectManager.Object;
-import InstructionObject.*;
-import Persistence.*;
+import labeling.SecurityLevel;
+import object_manager.ObjectManager;
+import entity.obl_object.OBLObject;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
