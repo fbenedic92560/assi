@@ -1,13 +1,13 @@
 package object_manager;
 
-import object_manager.ObjectManager;
-import entity.obl_object.OBLObject;
+import objectmanager.ObjectManager;
+import entityobject.EntityObject;
 import labeling.SecurityLevel;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
-import object_manager.exception.ObjectManagerException;
+import exception.ObjectManagerException;
 
 /**
  *
@@ -81,7 +81,7 @@ public class ObjectManagerTest {
         } catch (ObjectManagerException e) {
             throw e;
         }
-        assertEquals(new OBLObject("lobj", SecurityLevel.LOW), objectManager.getObjectByName("lobj"));
+        assertEquals(new EntityObject("lobj", SecurityLevel.LOW), objectManager.getObjectByName("lobj"));
     }
 
     @Test

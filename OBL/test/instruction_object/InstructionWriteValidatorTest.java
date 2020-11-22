@@ -5,7 +5,7 @@
  */
 package instruction_object;
 
-import instruction.validator.InstructionWriteValidator;
+import instruction.InstructionWriteValidator;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;

@@ -1,4 +1,4 @@
-package entity.obl_subject.exception;
+package exception;
 
 /**
  *

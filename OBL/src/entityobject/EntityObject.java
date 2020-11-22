@@ -1,30 +1,33 @@
-package entity.obl_subject;
+package entityobject;
 
 import labeling.SecurityLevel;
-import object_manager.exception.ObjectManagerException;
-import object_manager.ObjectManager;
-import entity.obl_subject.exception.SubjectException;
 import java.util.Objects;
 
 /**
  *
  * @author martellocauda
  */
-public class OBLSubject {
+public class EntityObject {
 
     private String name;
-    private int temp;
+    private int value;
     private SecurityLevel securityLevel;
 
-    public OBLSubject() {//check this default values
+    public EntityObject() {//check this default values
         this.name = "";
-        this.temp = 0;
-        this.securityLevel = SecurityLevel.LOW;
+        this.value = 0;
+        this.securityLevel = SecurityLevel.HIGH;
     }
 
-    public OBLSubject(String name, SecurityLevel securityLevel) {
+    public EntityObject(String name, int value, SecurityLevel securityLevel) {
         this.name = name.toLowerCase();
-        this.temp = 0;
+        this.value = value;
+        this.securityLevel = securityLevel;
+    }
+
+    public EntityObject(String name, SecurityLevel securityLevel) {
+        this.name = name.toLowerCase();
+        this.value = 0;
         this.securityLevel = securityLevel;
     }
 
@@ -36,12 +39,12 @@ public class OBLSubject {
         this.name = name.toLowerCase();
     }
 
-    public int getTemp() {
-        return this.temp;
+    public int getValue() {
+        return this.value;
     }
 
-    public void setTemp(int temp) {
-        this.temp = temp;
+    public void setValue(int value) {
+        this.value = value;
     }
 
     public SecurityLevel getSecurityLevel() {
@@ -49,7 +52,7 @@ public class OBLSubject {
     }
 
     @Override
-    public boolean equals(Object obj) {
+    public boolean equals(java.lang.Object obj) {
         if (this == obj) {
             return true;
         }
@@ -59,11 +62,10 @@ public class OBLSubject {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final OBLSubject other = (OBLSubject) obj;
+        final EntityObject other = (EntityObject) obj;
         if (!Objects.equals(this.name.toLowerCase(), other.name.toLowerCase())) {
             return false;
         }
         return true;
     }
-
 }

@@ -1,4 +1,4 @@
-package object_manager.exception;
+package exception;
 
 /**
  *

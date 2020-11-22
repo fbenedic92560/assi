@@ -3,12 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package instruction.validator;
+package instruction;
+
+import java.util.List;
 
 /**
  *
  * @author Usuario
  */
-public abstract class InstructionValidator {
-    public abstract Boolean validate(String instruction);
+public abstract class Instruction {
+    public abstract void execute();
 }

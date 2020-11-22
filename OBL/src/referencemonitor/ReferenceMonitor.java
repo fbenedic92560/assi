@@ -1,11 +1,11 @@
-package reference_monitor;
+package referencemonitor;
 
-import object_manager.ObjectManager;
-import entity.obl_object.OBLObject;
+import objectmanager.ObjectManager;
+import entityobject.EntityObject;
 import labeling.SecurityLevel;
-import object_manager.exception.ObjectManagerException;
-import reference_monitor.exception.ReferenceMonitorException;
-import entity.obl_subject.OBLSubject;
+import exception.ObjectManagerException;
+import exception.ReferenceMonitorException;
+import entitysubject.EntitySubject;
 
 /**
  *
@@ -27,11 +27,11 @@ public class ReferenceMonitor {
         }
     }
 
-    public OBLSubject createNewSubject(String name, SecurityLevel securityLevel) {
-        return new OBLSubject(name, securityLevel);
+    public EntitySubject createNewSubject(String name, SecurityLevel securityLevel) {
+        return new EntitySubject(name, securityLevel);
     }
 
-    private void verifyIfItCanRead(OBLSubject subject, OBLObject object) throws ReferenceMonitorException {
+    private void verifyIfItCanRead(EntitySubject subject, EntityObject object) throws ReferenceMonitorException {
         if (subject.getSecurityLevel().ordinal() < object.getSecurityLevel().ordinal()) {
             throw new ReferenceMonitorException("The subject "
                     + subject.getName()
@@ -40,7 +40,7 @@ public class ReferenceMonitor {
         }
     }
 
-    private void verifyIfItCanWrite(OBLSubject subject, OBLObject object) throws ReferenceMonitorException {
+    private void verifyIfItCanWrite(EntitySubject subject, EntityObject object) throws ReferenceMonitorException {
         if (object.getSecurityLevel().ordinal() < subject.getSecurityLevel().ordinal()) {
             throw new ReferenceMonitorException("The subject "
                     + subject.getName()
@@ -49,7 +49,7 @@ public class ReferenceMonitor {
         }
     }
 
-    public int executeRead(OBLSubject subject, String objectName) throws ReferenceMonitorException {
+    public int executeRead(EntitySubject subject, String objectName) throws ReferenceMonitorException {
         int value;
         try {
             verifyIfItCanRead(subject, objectManager.getObjectByName(objectName));
@@ -65,7 +65,7 @@ public class ReferenceMonitor {
         return value;
     }
 
-    public void executeWrite(OBLSubject subject, String objectName, int value) throws ReferenceMonitorException {
+    public void executeWrite(EntitySubject subject, String objectName, int value) throws ReferenceMonitorException {
         try {
             verifyIfItCanWrite(subject, objectManager.getObjectByName(objectName));
         } catch (ObjectManagerException e) {

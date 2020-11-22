@@ -1,4 +1,4 @@
-package reference_monitor.exception;
+package exception;
 
 /**
  *

@@ -1,10 +1,10 @@
-package object_manager;
+package objectmanager;
 
-import entity.obl_object.OBLObject;
+import entityobject.EntityObject;
 import labeling.SecurityLevel;
 import java.util.List;
 import java.util.ArrayList;
-import object_manager.exception.ObjectManagerException;
+import exception.ObjectManagerException;
 
 /**
  *
@@ -12,14 +12,14 @@ import object_manager.exception.ObjectManagerException;
  */
 public class ObjectManager {
 
-    private List<OBLObject> objects;
+    private List<EntityObject> objects;
 
     public ObjectManager() {
         objects = new ArrayList();
     }
 
     public void addObject(String name, SecurityLevel securityLevel) throws ObjectManagerException {
-        OBLObject object = new OBLObject(name.toLowerCase(), securityLevel);
+        EntityObject object = new EntityObject(name.toLowerCase(), securityLevel);
         if (objects.contains(object)) {
             throw new ObjectManagerException("This object already exists.");
         } else {
@@ -27,8 +27,8 @@ public class ObjectManager {
         }
     }
 
-    public OBLObject getObjectByName(String objectName) throws ObjectManagerException {
-        OBLObject wanted = objects.stream()
+    public EntityObject getObjectByName(String objectName) throws ObjectManagerException {
+        EntityObject wanted = objects.stream()
                 .filter(object -> objectName.equals(object.getName().toLowerCase()))
                 .findAny()
                 .orElse(null);

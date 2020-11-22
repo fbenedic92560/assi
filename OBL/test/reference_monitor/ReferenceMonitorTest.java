@@ -1,12 +1,12 @@
 package reference_monitor;
 
-import reference_monitor.ReferenceMonitor;
+import referencemonitor.ReferenceMonitor;
 import labeling.SecurityLevel;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
-import reference_monitor.exception.ReferenceMonitorException;
+import exception.ReferenceMonitorException;
 
 /**
  *

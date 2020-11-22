@@ -3,25 +3,22 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package instruction.validator;
+package instruction;
 
-import instruction.validator.InstructionValidator;
-import instruction.exception.InstructionWriteException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import exception.InstructionWriteException;
 
 /**
  *
  * @author Usuario
  */
-public class InstructionWriteValidator extends InstructionValidator {
+class InstructionWriteValidator extends InstructionValidator {
 
-    private static final String verb = "WRITE";
+    private static final String verb = InstructionType.WRITE.toString();
     
     @Override
-    public Boolean validate(String instruction) {
+    InstructionType validate(String instruction) {
         if (!instruction.toUpperCase().contains(verb)) {
-            return Boolean.FALSE;
+            return InstructionType.BAD;
         }
 
         String[] elementsInstruction = instruction.split(" ");
@@ -30,10 +27,9 @@ public class InstructionWriteValidator extends InstructionValidator {
                 throw new InstructionWriteException("Sentencia WRITE incorrecta");
             }
         } catch (InstructionWriteException ex) {
-            return Boolean.FALSE;
+            return InstructionType.BAD;
         }
         
-        return Boolean.TRUE;
+        return InstructionType.WRITE;
     }
-    
 }

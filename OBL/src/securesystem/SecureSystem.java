@@ -3,15 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package secure_system;
+package securesystem;
 
 import java.util.List;
 
-import instruction.InstructionObject;
-import reference_monitor.ReferenceMonitor;
-import entity.obl_subject.OBLSubject;
+import instructionobject.InstructionObject;
+import referencemonitor.ReferenceMonitor;
+import entitysubject.EntitySubject;
 import labeling.SecurityLevel;
-import reference_monitor.exception.ReferenceMonitorException;
+import exception.ReferenceMonitorException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -21,7 +21,7 @@ import java.util.logging.Logger;
  * @author Usuario
  */
 public class SecureSystem {
-    private final List<OBLSubject> listOfSubjects;
+    private final List<EntitySubject> listOfSubjects;
     private final ReferenceMonitor referenceMonitor;
     private final InstructionObject instructionObject;
     
@@ -36,9 +36,9 @@ public class SecureSystem {
     }
     
     public void createSubject(String nameSubject, SecurityLevel securityLevel) {
-        OBLSubject subject;
+        EntitySubject subject;
         
-        subject = new OBLSubject(nameSubject, securityLevel);
+        subject = new EntitySubject(nameSubject, securityLevel);
         this.listOfSubjects.add(subject);
     }
     
