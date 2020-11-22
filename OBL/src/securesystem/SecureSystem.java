@@ -44,7 +44,7 @@ public class SecureSystem {
     
     public void createObject(String nameObject, SecurityLevel securityLevel) {
         try {
-            this.referenceMonitor.createNewObject(nameObject, securityLevel);
+            this.referenceMonitor.createEntityObject(nameObject, securityLevel);
         } catch ( ReferenceMonitorException ex ) {
             Logger.getLogger(SecureSystem.class.getName()).log(Level.SEVERE, null, ex);
         }

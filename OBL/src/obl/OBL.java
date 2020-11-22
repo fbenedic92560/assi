@@ -1,30 +1,28 @@
 package obl;
 
 import labeling.SecurityLevel;
-import objectmanager.ObjectManager;
-import entityobject.EntityObject;
-import javax.swing.JFrame;
-import javax.swing.JOptionPane;
+import securesystem.SecureSystem;
 
 /**
  *
  * @author martellocauda
  */
 public class OBL {
-
-    private static void displayMainUI() {
-        
-    }
     /**
      * @param args the command line arguments
      * @throws java.lang.Exception
      */
     public static void main(String[] args) throws Exception {
-        javax.swing.SwingUtilities.invokeLater(new Runnable() {
-            public void run() {
-                createAndShowGUI();
-            }
-        });
-        //some tests
+        SecureSystem secureSystem = new SecureSystem();
+        
+        secureSystem.createObject("lobj", SecurityLevel.LOW);
+        secureSystem.createObject("mobj", SecurityLevel.MEDIUM);
+        secureSystem.createObject("hobj", SecurityLevel.HIGH);
+        
+        secureSystem.createSubject("lyle", SecurityLevel.LOW);
+        secureSystem.createSubject("moe", SecurityLevel.MEDIUM);
+        secureSystem.createSubject("hal", SecurityLevel.HIGH);
+        
+        secureSystem.readFile("c:\\temp\\assi_example001.txt");
     }
 }

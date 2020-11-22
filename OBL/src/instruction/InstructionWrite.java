@@ -5,7 +5,6 @@
  */
 package instruction;
 
-import entityobject.EntityObject;
 import entitysubject.EntitySubject;
 
 /**
@@ -13,30 +12,28 @@ import entitysubject.EntitySubject;
  * @author Usuario
  */
 public class InstructionWrite extends Instruction {
-    private EntitySubject oblSubject;
-    private EntityObject oblObject;
-    private String nameObject;
+    private EntitySubject entitySubject;
+    private String objectName;
     private Integer value;
     
-    public InstructionWrite(EntitySubject oblSubject, String nameObject, Integer value) {
-        this.oblSubject = oblSubject;
-        this.oblObject = null;
-        this.nameObject = nameObject;
+    InstructionWrite(EntitySubject entitySubject, String objectName, Integer value) {
+        this.entitySubject = entitySubject;
+        this.objectName = objectName;
         this.value = value;
     }
     
-    public EntitySubject getOBLSubject() {
-        return this.oblSubject;
+    public EntitySubject getEntitySubject() {
+        return this.entitySubject;
     }
     
-    public String getNameObject() {
-        return this.nameObject;
+    public String getObjectName() {
+        return this.objectName;
     }
     
-    public void setOBLObject(EntityObject oblObject) {
-        this.oblObject = oblObject;
+    public Integer getValue() {
+        return this.value;
     }
-    
+        
     public void execute() {
         //
     }

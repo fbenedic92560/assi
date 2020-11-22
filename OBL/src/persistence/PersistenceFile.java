@@ -12,7 +12,7 @@ import java.util.logging.Logger;
  * @author Usuario
  */
 public class PersistenceFile implements Persistence {
-    BufferedReader bufferedReader;
+    private BufferedReader bufferedReader;
     
     public PersistenceFile() {
         this.bufferedReader = null;

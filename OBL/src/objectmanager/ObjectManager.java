@@ -1,6 +1,7 @@
 package objectmanager;
 
 import entityobject.EntityObject;
+import entitysubject.EntitySubject;
 import labeling.SecurityLevel;
 import java.util.List;
 import java.util.ArrayList;
@@ -12,23 +13,23 @@ import exception.ObjectManagerException;
  */
 public class ObjectManager {
 
-    private List<EntityObject> objects;
+    private List<EntityObject> listOfEntityObjects;
 
     public ObjectManager() {
-        objects = new ArrayList();
+        this.listOfEntityObjects = new ArrayList<EntityObject>();
     }
 
     public void addObject(String name, SecurityLevel securityLevel) throws ObjectManagerException {
-        EntityObject object = new EntityObject(name.toLowerCase(), securityLevel);
-        if (objects.contains(object)) {
+        EntityObject entityObject = new EntityObject(name.toLowerCase(), securityLevel);
+        if (this.listOfEntityObjects.contains(entityObject)) {
             throw new ObjectManagerException("This object already exists.");
         } else {
-            objects.add(object);
+            this.listOfEntityObjects.add(entityObject);
         }
     }
 
     public EntityObject getObjectByName(String objectName) throws ObjectManagerException {
-        EntityObject wanted = objects.stream()
+        EntityObject wanted = this.listOfEntityObjects.stream()
                 .filter(object -> objectName.equals(object.getName().toLowerCase()))
                 .findAny()
                 .orElse(null);
@@ -38,11 +39,12 @@ public class ObjectManager {
         return wanted;
     }
 
-    public int read(String objectName) throws ObjectManagerException {
-        return getObjectByName(objectName).getValue();
+    public void read(EntitySubject entitySubject, EntityObject entityObject) throws ObjectManagerException {
+        Integer value = entityObject.getValue();
+        entitySubject.setTemp(value);
     }
 
-    public void write(String objectName, int value) throws ObjectManagerException {
-        getObjectByName(objectName).setValue(value);
+    public void write(EntityObject entityObject, Integer value) throws ObjectManagerException {
+        entityObject.setValue(value);
     }
 }

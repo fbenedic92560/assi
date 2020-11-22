@@ -6,6 +6,11 @@ import labeling.SecurityLevel;
 import exception.ObjectManagerException;
 import exception.ReferenceMonitorException;
 import entitysubject.EntitySubject;
+import instruction.Instruction;
+import instruction.InstructionRead;
+import instruction.InstructionWrite;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -19,15 +24,15 @@ public class ReferenceMonitor {
         this.objectManager = new ObjectManager();
     }
 
-    public void createNewObject(String name, SecurityLevel securityLevel) throws ReferenceMonitorException {
+    public void createEntityObject(String name, SecurityLevel securityLevel) throws ReferenceMonitorException {
         try {
-            objectManager.addObject(name, securityLevel);
+            this.objectManager.addObject(name, securityLevel);
         } catch (ObjectManagerException e) {
             throw new ReferenceMonitorException(e.getMessage());
         }
     }
 
-    public EntitySubject createNewSubject(String name, SecurityLevel securityLevel) {
+    public EntitySubject createEntitySubject(String name, SecurityLevel securityLevel) {
         return new EntitySubject(name, securityLevel);
     }
 
@@ -48,31 +53,54 @@ public class ReferenceMonitor {
                     + object.getName() + " according with BLP rules.");
         }
     }
-
-    public int executeRead(EntitySubject subject, String objectName) throws ReferenceMonitorException {
-        int value;
-        try {
-            verifyIfItCanRead(subject, objectManager.getObjectByName(objectName));
-        } catch (ObjectManagerException e) {
-            throw new ReferenceMonitorException(e.getMessage());
+    
+    public void executeInstruction(Instruction instruction) {
+        Integer value;
+        EntitySubject entitySubject;
+        String objectName;
+        
+        switch (instruction.getClass().toString()) {
+            case "InstructionRead":
+                entitySubject = ((InstructionRead)instruction).getEntitySubject();
+                objectName = ((InstructionRead)instruction).getObjectName();
+                try {
+                    this.executeRead(entitySubject, objectName);
+                } catch (ReferenceMonitorException ex) {
+                    Logger.getLogger(ReferenceMonitor.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                break;
+            case "InstructionWrite":
+                entitySubject = ((InstructionWrite)instruction).getEntitySubject();
+                objectName = ((InstructionWrite)instruction).getObjectName();
+                value = ((InstructionWrite)instruction).getValue();
+                try {
+                    this.executeWrite(entitySubject, objectName, value);
+                } catch (ReferenceMonitorException ex) {
+                    Logger.getLogger(ReferenceMonitor.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                break;
         }
-        try {
-            value = objectManager.read(objectName);
-        } catch (ObjectManagerException e) {
-            throw new ReferenceMonitorException(e.getMessage());
-        }
-        subject.setTemp(value);
-        return value;
     }
 
-    public void executeWrite(EntitySubject subject, String objectName, int value) throws ReferenceMonitorException {
+    private void executeRead(EntitySubject entitySubject, String objectName) throws ReferenceMonitorException {
+        EntityObject entityObject;
+        
         try {
-            verifyIfItCanWrite(subject, objectManager.getObjectByName(objectName));
+            entityObject = this.objectManager.getObjectByName(objectName);
+            verifyIfItCanRead(entitySubject, entityObject);
+            this.objectManager.read(entitySubject, entityObject);
         } catch (ObjectManagerException e) {
             throw new ReferenceMonitorException(e.getMessage());
         }
+    }
+
+    private void executeWrite(EntitySubject subject, String objectName, Integer value) throws ReferenceMonitorException {
+        EntityObject entityObject;
+        
         try {
-            objectManager.write(objectName, value);
+            entityObject = this.objectManager.getObjectByName(objectName);
+            verifyIfItCanWrite(subject, objectManager.getObjectByName(objectName));
+            this.objectManager.write(entityObject, value);
         } catch (ObjectManagerException e) {
             throw new ReferenceMonitorException(e.getMessage());
         }
