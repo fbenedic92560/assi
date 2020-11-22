@@ -18,6 +18,17 @@ public class ObjectManager {
     public ObjectManager() {
         this.listOfEntityObjects = new ArrayList<EntityObject>();
     }
+    
+    public void printStateOfEntityObjects() {
+        String objectName;
+        Integer objectValue;
+        
+        for (EntityObject entityObject : this.listOfEntityObjects) {
+            objectName = entityObject.getName();
+            objectValue = entityObject.getValue();
+            System.out.println(objectName + "has value: " + objectValue);
+        }
+    }
 
     public void addObject(String name, SecurityLevel securityLevel) throws ObjectManagerException {
         EntityObject entityObject = new EntityObject(name.toLowerCase(), securityLevel);

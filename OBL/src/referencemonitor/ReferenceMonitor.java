@@ -23,6 +23,10 @@ public class ReferenceMonitor {
     public ReferenceMonitor() {
         this.objectManager = new ObjectManager();
     }
+    
+    public void printObjectsInfo() {
+        this.objectManager.printStateOfEntityObjects();
+    }
 
     public void createEntityObject(String name, SecurityLevel securityLevel) throws ReferenceMonitorException {
         try {

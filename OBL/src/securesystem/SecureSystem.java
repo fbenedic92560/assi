@@ -31,8 +31,27 @@ public class SecureSystem {
         this.instructionObject = new InstructionObject();
     }
     
+    private void printStateOfEntitySubjects() {
+        String subjectName;
+        Integer subjectTempValue;
+        
+        for (EntitySubject entitySubject : this.listOfSubjects) {
+            subjectName = entitySubject.getName();
+            subjectTempValue = entitySubject.getTemp();
+            System.out.println(subjectName + " has recently read: " + subjectTempValue);
+        }
+    }
+    
+    private void printState() {
+        System.out.println("The current state is:");
+        this.printStateOfEntitySubjects();
+        this.referenceMonitor.printObjectsInfo();
+    }
+    
     public void readFile(String nameFile) {
+        System.out.println("Reading from file: " + nameFile);
         this.instructionObject.readFile(nameFile, this.listOfSubjects, this.referenceMonitor);
+        this.printState();
     }
     
     public void createSubject(String nameSubject, SecurityLevel securityLevel) {
