@@ -18,11 +18,11 @@ public class ObjectManager {
     public ObjectManager() {
         this.listOfEntityObjects = new ArrayList<EntityObject>();
     }
-    
+
     public void printStateOfEntityObjects() {
         String objectName;
         Integer objectValue;
-        
+
         for (EntityObject entityObject : this.listOfEntityObjects) {
             objectName = entityObject.getName();
             objectValue = entityObject.getValue();
@@ -30,12 +30,20 @@ public class ObjectManager {
         }
     }
 
-    public void addObject(String name, SecurityLevel securityLevel) throws ObjectManagerException {
+    public void create(String name, SecurityLevel securityLevel) throws ObjectManagerException {
         EntityObject entityObject = new EntityObject(name.toLowerCase(), securityLevel);
         if (this.listOfEntityObjects.contains(entityObject)) {
             throw new ObjectManagerException("This object already exists.");
         } else {
             this.listOfEntityObjects.add(entityObject);
+        }
+    }
+
+    public void destroy(String name) throws ObjectManagerException {
+        try {
+            this.listOfEntityObjects.remove(getObjectByName(name));
+        } catch (ObjectManagerException e) {
+            throw e;
         }
     }
 
@@ -58,4 +66,5 @@ public class ObjectManager {
     public void write(EntityObject entityObject, Integer value) throws ObjectManagerException {
         entityObject.setValue(value);
     }
+
 }
