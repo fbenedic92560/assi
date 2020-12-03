@@ -26,6 +26,7 @@ public class sleeper {
                 sleepMinutesToOdd();
                 break;
             case NEUTRAL:
+                sleepMinutesToNeutral();
                 break;
         }
     }
@@ -60,9 +61,9 @@ public class sleeper {
         
         Integer moduleMinutes = minutes % 2;
         if (moduleMinutes == 1) {
-            secondsToSleep = secondsOfMinutes - seconds;
-        } else {
             secondsToSleep = secondsOfMinutes - seconds + secondsOfMinutes;
+        } else {
+            secondsToSleep = secondsOfMinutes - seconds;
         }
         
         try {
@@ -71,5 +72,16 @@ public class sleeper {
             Logger.getLogger(sleeper.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-
+    
+    private void sleepMinutesToNeutral() {
+        LocalDateTime localDateTime = LocalDateTime.now();
+        Integer seconds = localDateTime.getSecond();
+        
+        Integer secondsToSleep = secondsOfMinutes - seconds + secondsOfMinutes;
+        try {
+            TimeUnit.SECONDS.sleep(secondsToSleep);
+        } catch (InterruptedException ex) {
+            Logger.getLogger(sleeper.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 }
