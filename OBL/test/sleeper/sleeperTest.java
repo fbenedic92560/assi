@@ -5,6 +5,7 @@
  */
 package sleeper;
 
+import java.time.LocalDateTime;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -28,16 +29,37 @@ public class sleeperTest {
     }
 
     /**
-     * Test of sleepMinutes method, of class sleeper.
+     * Test of sleepMinutesToEven method, of class Sleeper.
      */
     @Test
-    public void testSleepMinutes() {
-        System.out.println("sleepMinutes");
-        ModeTimeAdvancer modeTimeAdvancer = null;
-        sleeper instance = new sleeper();
-        instance.sleepMinutes(modeTimeAdvancer);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+    public void testSleepMinutesToEven() {
+        ModeTimeAdvancer modeTimeAdvancer = ModeTimeAdvancer.EVEN;
+        Sleeper sleeper = new Sleeper();
+        Integer minutes;
+        LocalDateTime localDateTime;
+        
+        sleeper.sleepMinutes(modeTimeAdvancer);
+        
+        localDateTime = LocalDateTime.now();
+        minutes = localDateTime.getMinute();
+        assertEquals(minutes % 2, 0);
+    }
+
+    /**
+     * Test of sleepMinutesToOdd method, of class Sleeper.
+     */
+    @Test
+    public void testSleepMinutesToOdd() {
+        ModeTimeAdvancer modeTimeAdvancer = ModeTimeAdvancer.EVEN;
+        Sleeper sleeper = new Sleeper();
+        Integer minutes;
+        LocalDateTime localDateTime;
+        
+        sleeper.sleepMinutes(modeTimeAdvancer);
+        
+        localDateTime = LocalDateTime.now();
+        minutes = localDateTime.getMinute();
+        assertEquals(minutes % 2, 1);
     }
     
 }

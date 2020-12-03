@@ -14,7 +14,7 @@ import java.util.logging.Logger;
  *
  * @author Usuario
  */
-public class sleeper {
+public class Sleeper {
     private static final Integer secondsOfMinutes = 60;
     
     public void sleepMinutes(ModeTimeAdvancer modeTimeAdvancer) {
@@ -48,7 +48,7 @@ public class sleeper {
         try {
             TimeUnit.SECONDS.sleep(secondsToSleep);
         } catch (InterruptedException ex) {
-            Logger.getLogger(sleeper.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Sleeper.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -69,7 +69,7 @@ public class sleeper {
         try {
             TimeUnit.SECONDS.sleep(secondsToSleep);
         } catch (InterruptedException ex) {
-            Logger.getLogger(sleeper.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Sleeper.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     
@@ -81,7 +81,7 @@ public class sleeper {
         try {
             TimeUnit.SECONDS.sleep(secondsToSleep);
         } catch (InterruptedException ex) {
-            Logger.getLogger(sleeper.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Sleeper.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 }
