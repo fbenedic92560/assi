@@ -50,7 +50,7 @@ public class sleeperTest {
      */
     @Test
     public void testSleepMinutesToOdd() {
-        ModeTimeAdvancer modeTimeAdvancer = ModeTimeAdvancer.EVEN;
+        ModeTimeAdvancer modeTimeAdvancer = ModeTimeAdvancer.ODD;
         Sleeper sleeper = new Sleeper();
         Integer minutes;
         LocalDateTime localDateTime;
@@ -62,4 +62,20 @@ public class sleeperTest {
         assertEquals(minutes % 2, 1);
     }
     
+    /**
+     * Test of sleepMinutesToNeutral method, of class Sleeper.
+     */
+    @Test
+    public void testSleepMinutesToNeutral() {
+        ModeTimeAdvancer modeTimeAdvancer = ModeTimeAdvancer.ODD;
+        Sleeper sleeper = new Sleeper();
+        Integer minutes;
+        LocalDateTime localDateTime;
+        
+        sleeper.sleepMinutes(modeTimeAdvancer);
+        
+        localDateTime = LocalDateTime.now();
+        minutes = localDateTime.getMinute();
+        assertEquals(minutes % 2, 1);
+    }
 }
