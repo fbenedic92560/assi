@@ -332,7 +332,7 @@ public class sleeperTest {
             actualSeconds = LocalDateTime.now().getSecond();
         }
         
-        sleeper.sleepMinutes(modeTimeAdvancer);
+        sleeper.sleepSeconds(modeTimeAdvancer);
         
         localDateTime = LocalDateTime.now();
         seconds = localDateTime.getSecond();
