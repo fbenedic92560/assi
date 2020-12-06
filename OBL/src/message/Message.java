@@ -31,7 +31,7 @@ public class Message {
         return paddedBinaryString;
     }
     
-    public String convertMessageToBitsArray(String message) {
+    public String convertStringToBitsArray(String message) {
         Integer asciiValue, quantityInitialZeroCharacters;
         String binaryPortionOfMessage, paddedBinaryPortionOfMessage;
         String binaryMessage = "";

@@ -35,7 +35,7 @@ public class MessageTest {
         String message = "m";
         Message instance = new Message();
         String expResult = "01101101";
-        String result = instance.convertMessageToBitsArray(message);
+        String result = instance.convertStringToBitsArray(message);
         assertEquals(expResult, result);
     }
     
@@ -44,7 +44,7 @@ public class MessageTest {
         String message = "mensaje";
         Message instance = new Message();
         String expResult = "01101101011001010110111001110011011000010110101001100101";
-        String result = instance.convertMessageToBitsArray(message);
+        String result = instance.convertStringToBitsArray(message);
         assertEquals(expResult, result);
     }    
 }
