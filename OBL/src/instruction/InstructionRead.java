@@ -15,7 +15,7 @@ public class InstructionRead extends Instruction {
     private EntitySubject entitySubject;
     private String objectName;
     
-    InstructionRead(EntitySubject entitySubject, String objectName) {
+    public InstructionRead(EntitySubject entitySubject, String objectName) {
         this.entitySubject = entitySubject;
         this.objectName = objectName;
     }

@@ -5,25 +5,27 @@
  */
 package message;
 
+import labeling.SecurityLevel;
 import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import securesystem.SecureSystem;
 
 /**
  *
  * @author Usuario
  */
 public class MessageTest {
-    
+
     public MessageTest() {
     }
-    
+
     @BeforeClass
     public static void setUpClass() {
     }
-    
+
     @AfterClass
     public static void tearDownClass() {
     }
@@ -39,7 +41,7 @@ public class MessageTest {
         String result = instance.convertStringToBitsArray(message);
         assertEquals(expResult, result);
     }
-    
+
     @Test
     public void testConvertMessageToBitsArray() {
         String message = "mensaje";
@@ -48,18 +50,18 @@ public class MessageTest {
         String result = instance.convertStringToBitsArray(message);
         assertEquals(expResult, result);
     }
-    
+
     @Test
     public void testConvertCharactertoBitsArray() {
         Character[] bitRepresentation;
         Message instance = new Message();
-        
+
         Character characterToConvert = 'C';
-        
-        Character[] bitsRepresentationToCompare = {'0', '1', '0', '0', '0', '0', '1', '1' };
-        
+
+        Character[] bitsRepresentationToCompare = {'0', '1', '0', '0', '0', '0', '1', '1'};
+
         Character[] bitsRepresentation = instance.convertCharactertoBitsArray(characterToConvert);
-        
+
         Assert.assertArrayEquals(bitsRepresentationToCompare, bitsRepresentation);
     }
 }
