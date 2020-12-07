@@ -7,6 +7,7 @@ import exception.SubjectException;
 import java.util.Objects;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  *
@@ -21,7 +22,8 @@ public class EntitySubject {
     private int[] lastByte;
     private int bitToRead;
     /*local vars to store hal things*/
-    private List<Integer> bitCacheToSend;
+    private List<Character> bitCacheToSend;
+    private int positionOfBitToSend;
 
     public EntitySubject() {//check this default values
         this.name = "";
@@ -29,7 +31,8 @@ public class EntitySubject {
         this.securityLevel = SecurityLevel.LOW;
         this.bitToRead = 0;
         this.lastByte = new int[8];
-        this.bitCacheToSend = new ArrayList<Integer>();
+        this.bitCacheToSend = new ArrayList<Character>();
+        this.positionOfBitToSend = -1;
     }
 
     public EntitySubject(String name, SecurityLevel securityLevel) {
@@ -38,7 +41,8 @@ public class EntitySubject {
         this.securityLevel = securityLevel;
         this.bitToRead = 0;
         this.lastByte = new int[8];
-        this.bitCacheToSend = new ArrayList<Integer>();
+        this.bitCacheToSend = new ArrayList<Character>();
+        this.positionOfBitToSend = -1;
     }
 
     public int[] getLastByte() {
@@ -75,22 +79,35 @@ public class EntitySubject {
         bitToRead++;
         if (bitToRead == 8) {
             bitToRead = 0;
+            System.out.println("ULTIMO BYTE LEIDO, ENTITYSUBJECT " + Arrays.toString(lastByte));
             initializeLastByte();
         }
     }
 
-    public void ReadBit(int bit) {
+    public void storeBit(int bit) {
         lastByte[bitToRead] = bit;
+
         incrementBitToRead();
     }
 
-    public void enqueueBitInCache(Integer bit) {
+    public void enqueueBitInCache(Character bit) {
         bitCacheToSend.add(bit);
     }
 
-    public Integer dequeueBitFromCache() {
-        Integer bit = bitCacheToSend.get(0);
+    public Character dequeueBitFromCache() {
+        Character bit = bitCacheToSend.get(0);
+
         bitCacheToSend.remove(0);
+
+        return bit;
+    }
+
+    public void nextBit() {
+        positionOfBitToSend++;
+    }
+
+    public Character getBitFromCache() {
+        Character bit = bitCacheToSend.get(positionOfBitToSend);
         return bit;
     }
 

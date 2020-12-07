@@ -16,7 +16,7 @@ public class InstructionWrite extends Instruction {
     private String objectName;
     private Integer value;
     
-    InstructionWrite(EntitySubject entitySubject, String objectName, Integer value) {
+    public InstructionWrite(EntitySubject entitySubject, String objectName, Integer value) {
         this.entitySubject = entitySubject;
         this.objectName = objectName;
         this.value = value;

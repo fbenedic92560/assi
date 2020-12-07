@@ -72,14 +72,15 @@ public class ReferenceMonitor {
         EntitySubject entitySubject;
         String objectName;
 
-        switch (instruction.getClass().toString()) {
+        switch (instruction.getClass().toString().split("[.]", 0)[1]) {
             case "InstructionRead":
                 entitySubject = ((InstructionRead) instruction).getEntitySubject();
                 objectName = ((InstructionRead) instruction).getObjectName();
                 try {
                     this.executeRead(entitySubject, objectName);
                 } catch (ReferenceMonitorException ex) {
-                    Logger.getLogger(ReferenceMonitor.class.getName()).log(Level.SEVERE, null, ex);
+                    entitySubject.setTemp(0);
+                    //Logger.getLogger(ReferenceMonitor.class.getName()).log(Level.SEVERE, null, ex);
                 }
                 break;
             case "InstructionWrite":
@@ -89,7 +90,7 @@ public class ReferenceMonitor {
                 try {
                     this.executeWrite(entitySubject, objectName, value);
                 } catch (ReferenceMonitorException ex) {
-                    Logger.getLogger(ReferenceMonitor.class.getName()).log(Level.SEVERE, null, ex);
+                    //Logger.getLogger(ReferenceMonitor.class.getName()).log(Level.SEVERE, null, ex);
                 }
                 break;
         }
