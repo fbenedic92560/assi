@@ -5,6 +5,8 @@ import exception.ObjectManagerException;
 import objectmanager.ObjectManager;
 import exception.SubjectException;
 import java.util.Objects;
+import java.util.List;
+import java.util.ArrayList;
 
 /**
  *
@@ -15,17 +17,81 @@ public class EntitySubject {
     private String name;
     private int temp;
     private SecurityLevel securityLevel;
+    /*local vars to store lyle things*/
+    private int[] lastByte;
+    private int bitToRead;
+    /*local vars to store hal things*/
+    private List<Integer> bitCacheToSend;
 
     public EntitySubject() {//check this default values
         this.name = "";
         this.temp = 0;
         this.securityLevel = SecurityLevel.LOW;
+        this.bitToRead = 0;
+        this.lastByte = new int[8];
+        this.bitCacheToSend = new ArrayList<Integer>();
     }
 
     public EntitySubject(String name, SecurityLevel securityLevel) {
         this.name = name.toLowerCase();
         this.temp = 0;
         this.securityLevel = securityLevel;
+        this.bitToRead = 0;
+        this.lastByte = new int[8];
+        this.bitCacheToSend = new ArrayList<Integer>();
+    }
+
+    public int[] getLastByte() {
+        return lastByte;
+    }
+
+    public String getLastByteInString() {
+        String lastByteInString = "";
+        for (int i = 0; i < lastByte.length; i++) {
+            lastByteInString += lastByte[i];
+        }
+        return lastByteInString;
+    }
+
+    public void setLastByte(int[] lastByte) {
+        this.lastByte = lastByte;
+    }
+
+    public int getBitToRead() {
+        return bitToRead;
+    }
+
+    public void setBitToRead(int bitToRead) {
+        this.bitToRead = bitToRead;
+    }
+
+    private void initializeLastByte() {
+        for (int i = 0; i < lastByte.length; i++) {
+            lastByte[i] = 0;
+        }
+    }
+
+    private void incrementBitToRead() {
+        bitToRead++;
+        if (bitToRead == 8) {
+            bitToRead = 0;
+            initializeLastByte();
+        }
+    }
+
+    public void ReadBit(int bit) {
+        lastByte[bitToRead] = bit;
+        incrementBitToRead();
+    }
+
+    public void enqueueBitInCache(Integer bit) {
+        bitCacheToSend.add(bit);
+    }
+
+    public Integer dequeueBitFromCache() {
+        Integer bit = bitCacheToSend.get(0);
+        bitCacheToSend.remove(0);
+        return bit;
     }
 
     public String getName() {
