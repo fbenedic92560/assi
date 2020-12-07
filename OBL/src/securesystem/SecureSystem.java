@@ -12,15 +12,23 @@ import referencemonitor.ReferenceMonitor;
 import entitysubject.EntitySubject;
 import labeling.SecurityLevel;
 import exception.ReferenceMonitorException;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.function.Predicate;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import message.Message;
+import persistence.Persistence;
+import persistence.PersistenceFile;
 
 /**
  *
  * @author Usuario
  */
 public class SecureSystem {
+    private enum ValidSequenceCharacter { H, M, L };
+
     private final List<EntitySubject> listOfSubjects;
     private final ReferenceMonitor referenceMonitor;
     private final InstructionObject instructionObject;
@@ -65,6 +73,81 @@ public class SecureSystem {
         try {
             this.referenceMonitor.createEntityObject(nameObject, securityLevel);
         } catch ( ReferenceMonitorException ex ) {
+            Logger.getLogger(SecureSystem.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    private Boolean validateSequenceCharacter(Character characterSequence) {
+        ValidSequenceCharacter[] validCharacters = ValidSequenceCharacter.values();
+        
+        Boolean valid = Boolean.FALSE;
+        for (char c : Arrays.toString(validCharacters).toCharArray()) {
+            if (characterSequence == c) {
+                valid = Boolean.TRUE;
+                break;
+            }
+        }
+        
+        return valid;
+    }
+    
+    public void covertChannel(String messageFileName, String sequenceFileName) {
+        Persistence persistenceMessageFile = new PersistenceFile();
+        Persistence persistenceSequenceFile = new PersistenceFile();
+              
+        try {
+            persistenceMessageFile.openPersistence(messageFileName);
+            persistenceSequenceFile.openPersistence(sequenceFileName);
+            
+            Character characterSequence;
+            Character characterMessage;
+            Character[] bitsOfCharacter = new Character[8];
+            Integer offsetBitOfCharacter;
+            Message message = new Message();
+            
+            Boolean endMessage = Boolean.FALSE;
+            offsetBitOfCharacter = 8;
+            while ((characterSequence = persistenceSequenceFile.retrieveOneCharacter()) != null) {
+                if (validateSequenceCharacter(characterSequence)) {
+                    switch (ValidSequenceCharacter.valueOf(characterSequence.toString())) {
+                        case H:
+                            if (offsetBitOfCharacter > 7) {
+                                if (endMessage) {
+                                    break;
+                                }
+                                characterMessage = persistenceMessageFile.retrieveOneCharacter();
+                                if (characterMessage != null) {
+                                    offsetBitOfCharacter = 0;
+                                    bitsOfCharacter = message.convertCharactertoBitsArray(characterMessage);
+                                    System.out.print(bitsOfCharacter[offsetBitOfCharacter]);
+                                    // call Hal with bitsOfCharacters{offsetBitOfCharacter]
+                                    offsetBitOfCharacter++;
+                                } else {
+                                    endMessage = Boolean.TRUE;
+                                    offsetBitOfCharacter = 0;
+                                }
+                            } else {
+                                if (endMessage) {
+                                    System.out.print('0');
+                                    // call Hal with '0'
+                                } else {
+                                    System.out.print(bitsOfCharacter[offsetBitOfCharacter]);
+                                    // call Hal with bitsOfCharacters{offsetBitOfCharacter]
+                                }
+                                offsetBitOfCharacter++;
+                            }
+                            break;
+                        case M:
+                            // call Moe
+                            break;
+                        case L:
+                            // call Lil
+                            break;
+                    }
+                }
+            }
+            
+        } catch (IOException ex) {
             Logger.getLogger(SecureSystem.class.getName()).log(Level.SEVERE, null, ex);
         }
     }

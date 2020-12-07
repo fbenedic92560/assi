@@ -29,6 +29,7 @@ public class PersistenceFile implements Persistence {
             return Boolean.FALSE;
         }
     }
+    
     @Override
     public String retrieveOneLine() throws IOException {
         String lineBufferedReader;
@@ -45,6 +46,25 @@ public class PersistenceFile implements Persistence {
         }
         return line;
     }
+    
+    @Override
+    public Character retrieveOneCharacter() throws IOException {
+        Character characterBufferedReader;
+        
+        characterBufferedReader = null;
+        if (this.bufferedReader != null) {
+            try {
+                int character = this.bufferedReader.read();
+                if (character != -1) {
+                    characterBufferedReader = new Character((char) character);
+                }
+            } catch (IOException ex) {
+                Logger.getLogger(PersistenceFile.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return characterBufferedReader;
+    }
+    
     @Override
     public Boolean closePersistence() throws IOException {
         try {

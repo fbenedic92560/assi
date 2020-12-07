@@ -45,10 +45,25 @@ public class Message {
             binaryMessage = binaryMessage + paddedBinaryPortionOfMessage;
         }
         
-        for (char c : binaryMessage.toCharArray()) {
-            System.out.print(c);
+        return binaryMessage;
+    }
+
+    public Character[] convertCharactertoBitsArray(Character character) {
+        Integer asciiValue, quantityInitialZeroCharacters;
+        String binaryPortionOfMessage, paddedBinaryPortionOfMessage;
+        Character[] bitRepresentation = new Character[8];
+        
+        Arrays.fill(bitRepresentation, ZERO_CHARACTER);
+        asciiValue = (int) character;
+        binaryPortionOfMessage = Integer.toBinaryString(asciiValue);
+        quantityInitialZeroCharacters = QUANTITY_BITS_OF_BYTE - binaryPortionOfMessage.length();
+
+        Integer offset = quantityInitialZeroCharacters;
+        for (char c : binaryPortionOfMessage.toCharArray()) {
+            bitRepresentation[offset] = c;
+            offset++;
         }
         
-        return binaryMessage;
-    }    
+        return bitRepresentation;
+    }
 }

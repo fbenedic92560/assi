@@ -43,6 +43,8 @@ public class OBL {
                 processInstructionList();
                 break;
             case COVERTCHANNEL:
+                processCovertChannel();
+                break;
         }
         
         System.exit(0);
@@ -53,7 +55,7 @@ public class OBL {
     }
     
     private static void processCovertChannel() {
-        //
+        secureSystem.covertChannel(messageFileName, sequenceFileName);
     }
     
     private static void loadDefaultSubjectsAndObjects() {

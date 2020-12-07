@@ -6,6 +6,7 @@
 package message;
 
 import org.junit.AfterClass;
+import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
@@ -46,5 +47,19 @@ public class MessageTest {
         String expResult = "01101101011001010110111001110011011000010110101001100101";
         String result = instance.convertStringToBitsArray(message);
         assertEquals(expResult, result);
-    }    
+    }
+    
+    @Test
+    public void testConvertCharactertoBitsArray() {
+        Character[] bitRepresentation;
+        Message instance = new Message();
+        
+        Character characterToConvert = 'C';
+        
+        Character[] bitsRepresentationToCompare = {'0', '1', '0', '0', '0', '0', '1', '1' };
+        
+        Character[] bitsRepresentation = instance.convertCharactertoBitsArray(characterToConvert);
+        
+        Assert.assertArrayEquals(bitsRepresentationToCompare, bitsRepresentation);
+    }
 }
