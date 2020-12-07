@@ -97,6 +97,6 @@ public class InstructionCreator {
                 instruction = createBadInstruction(lineInstruction);
                 break;
         }
-        return null;
+        return instruction;
     }
 }

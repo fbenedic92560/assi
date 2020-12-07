@@ -36,7 +36,7 @@ public class InstructionObject {
             while ((line = persistence.retrieveOneLine()) != null) {
                 instruction = instructionCreator.createInstruction(line, listOfEntitySubjects);
                 if (!isNull(instruction)) {
-                    // aca le envia la instruccion al referenceMonitor
+                    referenceMonitor.executeInstruction(instruction);
                 }
             }
             
