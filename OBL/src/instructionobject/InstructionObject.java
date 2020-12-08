@@ -38,11 +38,26 @@ public class InstructionObject {
                 if (!isNull(instruction)) {
                     referenceMonitor.executeInstruction(instruction);
                 }
+                printStateOfEntitySubjects(listOfEntitySubjects, line, instruction.getClass().getSimpleName());
+                referenceMonitor.printObjectsInfo();
             }
             
             persistence.closePersistence();
         } catch (IOException ex) {
             Logger.getLogger(InstructionObject.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    private void printStateOfEntitySubjects(List<EntitySubject> listOfEntitySubjects, String lineInstruction, String instructionType) {
+        String subjectName;
+        Integer subjectTempValue;
+
+        System.out.println("\nInstruction: " + lineInstruction + " - " + instructionType);
+        System.out.println("\tThe current state is:\n");
+        for (EntitySubject entitySubject : listOfEntitySubjects) {
+            subjectName = entitySubject.getName();
+            subjectTempValue = entitySubject.getTemp();
+            System.out.println("\t\t" + subjectName + " has recently read: " + subjectTempValue);
         }
     }
 }

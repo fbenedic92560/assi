@@ -79,7 +79,6 @@ public class ReferenceMonitor {
                 try {
                     this.executeRead(entitySubject, objectName);
                 } catch (ReferenceMonitorException ex) {
-                    entitySubject.setTemp(0);
                     //Logger.getLogger(ReferenceMonitor.class.getName()).log(Level.SEVERE, null, ex);
                 }
                 break;
