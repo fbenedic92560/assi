@@ -36,13 +36,28 @@ public class InstructionObject {
             while ((line = persistence.retrieveOneLine()) != null) {
                 instruction = instructionCreator.createInstruction(line, listOfEntitySubjects);
                 if (!isNull(instruction)) {
-                    // aca le envia la instruccion al referenceMonitor
+                    referenceMonitor.executeInstruction(instruction);
                 }
+                printStateOfEntitySubjects(listOfEntitySubjects, line, instruction.getClass().getSimpleName());
+                referenceMonitor.printObjectsInfo();
             }
             
             persistence.closePersistence();
         } catch (IOException ex) {
             Logger.getLogger(InstructionObject.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    private void printStateOfEntitySubjects(List<EntitySubject> listOfEntitySubjects, String lineInstruction, String instructionType) {
+        String subjectName;
+        Integer subjectTempValue;
+
+        System.out.println("\nInstruction: " + lineInstruction + " - " + instructionType);
+        System.out.println("\tThe current state is:\n");
+        for (EntitySubject entitySubject : listOfEntitySubjects) {
+            subjectName = entitySubject.getName();
+            subjectTempValue = entitySubject.getTemp();
+            System.out.println("\t\t" + subjectName + " has recently read: " + subjectTempValue);
         }
     }
 }

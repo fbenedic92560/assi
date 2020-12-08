@@ -22,11 +22,7 @@ class InstructionWriteValidator extends InstructionValidator {
         }
 
         String[] elementsInstruction = instruction.split(" ");
-        try {
-            if (elementsInstruction.length != 4) {
-                throw new InstructionWriteException("Sentencia WRITE incorrecta");
-            }
-        } catch (InstructionWriteException ex) {
+        if (elementsInstruction.length != 4) {
             return InstructionType.BAD;
         }
         

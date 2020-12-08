@@ -26,7 +26,7 @@ public class ObjectManager {
         for (EntityObject entityObject : this.listOfEntityObjects) {
             objectName = entityObject.getName();
             objectValue = entityObject.getValue();
-            System.out.println(objectName + "has value: " + objectValue);
+            System.out.println("\t\t" + objectName + " has value: " + objectValue);
         }
     }
 

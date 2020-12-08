@@ -22,14 +22,10 @@ class InstructionReadValidator extends InstructionValidator {
         }
 
         String[] elementsInstruction = instruction.split(" ");
-        try {
-            if (elementsInstruction.length != 3) {
-                throw new InstructionReadException("Sentencia READ incorrecta");
-            }
-        } catch (InstructionReadException ex) {
+        if (elementsInstruction.length != 3) {
             return InstructionType.BAD;
         }
-
+            
         return InstructionType.READ;
     }    
 }

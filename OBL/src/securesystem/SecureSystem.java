@@ -60,15 +60,17 @@ public class SecureSystem {
     }
 
     private void printState() {
-        System.out.println("The current state is:");
+        System.out.println("The current state is:\n");
         this.printStateOfEntitySubjects();
         this.referenceMonitor.printObjectsInfo();
     }
 
     public void readFile(String nameFile) {
-        System.out.println("Reading from file: " + nameFile);
+        System.out.println("-------------------------------------------------");
+        System.out.println("Reading from file: " + nameFile + "\n");
         this.instructionObject.readFile(nameFile, this.listOfSubjects, this.referenceMonitor);
-        this.printState();
+        //this.printState();
+        System.out.println("-------------------------------------------------");
     }
 
     public void createSubject(String nameSubject, SecurityLevel securityLevel) {
