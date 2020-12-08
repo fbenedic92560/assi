@@ -66,11 +66,8 @@ public class SecureSystem {
     }
 
     public void readFile(String nameFile) {
-        System.out.println("-------------------------------------------------");
-        System.out.println("Reading from file: " + nameFile + "\n");
         this.instructionObject.readFile(nameFile, this.listOfSubjects, this.referenceMonitor);
         //this.printState();
-        System.out.println("-------------------------------------------------");
     }
 
     public void createSubject(String nameSubject, SecurityLevel securityLevel) {
@@ -130,8 +127,12 @@ public class SecureSystem {
         Persistence persistenceSequenceFile = new PersistenceFile();
 
         try {
-            persistenceMessageFile.openPersistence(messageFileName);
-            persistenceSequenceFile.openPersistence(sequenceFileName);
+            if (!persistenceMessageFile.openPersistence(messageFileName)) {
+                return;
+            }
+            if (!persistenceSequenceFile.openPersistence(sequenceFileName)) {
+                return;
+            }
 
             Character characterSequence;
             Character characterMessage;
@@ -187,7 +188,9 @@ public class SecureSystem {
 
             String receivedMessage = this.decryptLyleReceivedMessage();
             writeLyleReceivedMessageToOutputFile(outputFileName, receivedMessage);
-
+            
+            persistenceMessageFile.closePersistence();
+            persistenceSequenceFile.closePersistence();
         } catch (IOException ex) {
             Logger.getLogger(SecureSystem.class
                     .getName()).log(Level.SEVERE, null, ex);

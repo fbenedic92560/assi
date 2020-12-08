@@ -26,7 +26,7 @@ public class OBL {
     );
 
     private enum Option {
-        INSTRUCTIONLIST, COVERTCHANNEL
+        INSTRUCTIONLIST, COVERTCHANNEL, NONE
     };
 
     private static String instructionListFileName;
@@ -34,7 +34,7 @@ public class OBL {
     private static String sequenceFileName;
     private static String outputFileName;
 
-    private static Option optionToProcess;
+    private static Option optionToProcess = Option.NONE;
 
     private static SecureSystem secureSystem;
 
@@ -54,6 +54,9 @@ public class OBL {
                 break;
             case COVERTCHANNEL:
                 processCovertChannel();
+                break;
+            case NONE:
+                System.exit(0);
                 break;
         }
 
@@ -81,6 +84,10 @@ public class OBL {
     }
 
     private static void processParameters(String[] args) {
+        if (args.length == 0) {
+            printHelp();
+            System.exit(0);
+        }
         switch (args[0]) {
             case "-i":
                 processParametersInstructionList(args);

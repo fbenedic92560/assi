@@ -25,7 +25,8 @@ public class PersistenceFile implements Persistence {
             this.bufferedReader = new BufferedReader(new FileReader(file));
             return Boolean.TRUE;
         } catch (IOException ex) {
-            Logger.getLogger(PersistenceFile.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("El archivo: " + stringPersistence + " no existe");
+            //Logger.getLogger(PersistenceFile.class.getName()).log(Level.SEVERE, null, ex);
             return Boolean.FALSE;
         }
     }

@@ -10,6 +10,7 @@ import persistence.Persistence;
 import entitysubject.EntitySubject;
 import instruction.Instruction;
 import instruction.InstructionCreator;
+import java.io.FileNotFoundException;
 import referencemonitor.ReferenceMonitor;
 
 import java.io.IOException;
@@ -27,33 +28,34 @@ public class InstructionObject {
     public void readFile(String nameFile, List<EntitySubject> listOfEntitySubjects, ReferenceMonitor referenceMonitor) {
         Instruction instruction;
         Persistence persistence = new PersistenceFile();
-        InstructionCreator instructionCreator = new InstructionCreator();
+        InstructionCreator instructionCreator = new InstructionCreator();        
 
         try {
-            persistence.openPersistence(nameFile);
+            if (persistence.openPersistence(nameFile)) {
             
-            String line;
-            while ((line = persistence.retrieveOneLine()) != null) {
-                instruction = instructionCreator.createInstruction(line, listOfEntitySubjects);
-                if (!isNull(instruction)) {
-                    referenceMonitor.executeInstruction(instruction);
+                String line;
+                while ((line = persistence.retrieveOneLine()) != null) {
+                    instruction = instructionCreator.createInstruction(line, listOfEntitySubjects);
+                    if (!isNull(instruction)) {
+                        referenceMonitor.executeInstruction(instruction);
+                    }
+                    printState(listOfEntitySubjects, line, instruction.getClass().getSimpleName(), nameFile, referenceMonitor);
                 }
-                printStateOfEntitySubjects(listOfEntitySubjects, line, instruction.getClass().getSimpleName());
-                referenceMonitor.printObjectsInfo();
-            }
             
-            persistence.closePersistence();
+                persistence.closePersistence();
+            }
         } catch (IOException ex) {
             Logger.getLogger(InstructionObject.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     
-    private void printStateOfEntitySubjects(List<EntitySubject> listOfEntitySubjects, String lineInstruction, String instructionType) {
+    private void printState(List<EntitySubject> listOfEntitySubjects, String lineInstruction, String instructionType, String nameFile, ReferenceMonitor referenceMonitor) {
         String subjectName;
         Integer subjectTempValue;
-
+        
         System.out.println("\nInstruction: " + lineInstruction + " - " + instructionType);
         System.out.println("\tThe current state is:\n");
+        referenceMonitor.printObjectsInfo();
         for (EntitySubject entitySubject : listOfEntitySubjects) {
             subjectName = entitySubject.getName();
             subjectTempValue = entitySubject.getTemp();
