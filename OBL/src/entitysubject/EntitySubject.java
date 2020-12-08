@@ -8,6 +8,8 @@ import java.util.Objects;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.io.File;
+import java.io.IOException;
 
 /**
  *
@@ -21,6 +23,7 @@ public class EntitySubject {
     /*local vars to store lyle things*/
     private int[] lastByte;
     private int bitToRead;
+    private List<Character> readedBytes;
     /*local vars to store hal things*/
     private List<Character> bitCacheToSend;
     private int positionOfBitToSend;
@@ -33,6 +36,7 @@ public class EntitySubject {
         this.lastByte = new int[8];
         this.bitCacheToSend = new ArrayList<Character>();
         this.positionOfBitToSend = -1;
+        readedBytes = new ArrayList<Character>();
     }
 
     public EntitySubject(String name, SecurityLevel securityLevel) {
@@ -43,6 +47,11 @@ public class EntitySubject {
         this.lastByte = new int[8];
         this.bitCacheToSend = new ArrayList<Character>();
         this.positionOfBitToSend = -1;
+        readedBytes = new ArrayList<Character>();
+    }
+    
+    public List<Character> getReadedBytes() {
+        return readedBytes;
     }
 
     public int[] getLastByte() {
@@ -79,7 +88,9 @@ public class EntitySubject {
         bitToRead++;
         if (bitToRead == 8) {
             bitToRead = 0;
-            System.out.println("ULTIMO BYTE LEIDO, ENTITYSUBJECT " + Arrays.toString(lastByte));
+            for (int i = 0; i < lastByte.length; i++) {
+                readedBytes.add((char) (lastByte[i] + '0'));
+            }
             initializeLastByte();
         }
     }

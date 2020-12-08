@@ -1,8 +1,11 @@
 package obl;
 
 import entitysubject.EntitySubject;
+import java.io.FileWriter;
 import labeling.SecurityLevel;
 import securesystem.SecureSystem;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  *
@@ -12,14 +15,14 @@ public class OBL {
 
     private static final String OPTION_HELP = String.join(
             "",
-             "\nUsage:\n\n",
-             "1) java OBL -i <instruction list file>\n",
-             "     <instruction list> instruction to execute and print state of subjects and objects\n",
-             "2) java OBL -m <message file> <sequence file>\n",
-             "     <message file> message to send throught covert channel\n",
-             "     <sequence file> sequence of subject's execution to send the message\n",
-             "3) java -h\n",
-             "     print this help\n\n"
+            "\nUsage:\n\n",
+            "1) java OBL -i <instruction list file>\n",
+            "     <instruction list> instruction to execute and print state of subjects and objects\n",
+            "2) java OBL -m <message file> <sequence file>\n",
+            "     <message file> message to send throught covert channel\n",
+            "     <sequence file> sequence of subject's execution to send the message\n",
+            "3) java -h\n",
+            "     print this help\n\n"
     );
 
     private enum Option {
@@ -29,6 +32,7 @@ public class OBL {
     private static String instructionListFileName;
     private static String messageFileName;
     private static String sequenceFileName;
+    private static String outputFileName;
 
     private static Option optionToProcess;
 
@@ -39,10 +43,11 @@ public class OBL {
      * @throws java.lang.Exception
      */
     public static void main(String[] args) throws Exception {
+        System.out.println();
         processParameters(args);
-        
+
         loadDefaultSubjectsAndObjects();
-        
+
         switch (optionToProcess) {
             case INSTRUCTIONLIST:
                 processInstructionList();
@@ -60,7 +65,7 @@ public class OBL {
     }
 
     private static void processCovertChannel() {
-        secureSystem.covertChannel(messageFileName, sequenceFileName);
+        secureSystem.covertChannel(messageFileName, sequenceFileName, outputFileName);
     }
 
     private static void loadDefaultSubjectsAndObjects() {
@@ -98,6 +103,16 @@ public class OBL {
         }
         messageFileName = args[1];
         sequenceFileName = args[2];
+        String[] splittedSecuenceFileName = sequenceFileName.split("\\\\", 0);
+        String[] onlyPathSequenceFileName = Arrays.copyOf(splittedSecuenceFileName, splittedSecuenceFileName.length - 1);
+        String onlyPathSequenceFileNameInString = "";
+        for (int i = 1; i < onlyPathSequenceFileName.length; i += 2) {
+            onlyPathSequenceFileName[i] = "\\\\";
+        }
+        for (int i = 0; i < onlyPathSequenceFileName.length; i++) {
+            onlyPathSequenceFileNameInString += onlyPathSequenceFileName[i];
+        }
+        outputFileName = onlyPathSequenceFileNameInString + "salida.txt";
         optionToProcess = Option.COVERTCHANNEL;
     }
 

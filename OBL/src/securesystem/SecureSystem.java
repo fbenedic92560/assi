@@ -24,6 +24,9 @@ import persistence.PersistenceFile;
 import instruction.*;
 import secureSubject.SecureSubject;
 import sleeper.*;
+import java.io.File;
+import java.io.IOException;
+import java.io.FileWriter;
 
 /**
  *
@@ -74,7 +77,7 @@ public class SecureSystem {
         subject = new EntitySubject(nameSubject, securityLevel);
         this.listOfSubjects.add(subject);
     }
-    
+
     public EntitySubject getSubject(String nameSubject) {
         EntitySubject subject;
 
@@ -120,7 +123,7 @@ public class SecureSystem {
         return valid;
     }
 
-    public void covertChannel(String messageFileName, String sequenceFileName) {
+    public void covertChannel(String messageFileName, String sequenceFileName, String outputFileName) {
         Persistence persistenceMessageFile = new PersistenceFile();
         Persistence persistenceSequenceFile = new PersistenceFile();
 
@@ -151,7 +154,7 @@ public class SecureSystem {
                                 if (characterMessage != null) {
                                     offsetBitOfCharacter = 0;
                                     bitsOfCharacter = message.convertCharactertoBitsArray(characterMessage);
-                                    System.out.println("BYTE A MANDAR, SECURESYSTEM " + Arrays.toString(bitsOfCharacter));
+                                    //System.out.println("BYTE A MANDAR, SECURESYSTEM " + Arrays.toString(bitsOfCharacter));
                                     //System.out.print(bitsOfCharacter[offsetBitOfCharacter]);
                                     secureSubject.halTurn(bitsOfCharacter[offsetBitOfCharacter], this);
                                     offsetBitOfCharacter++;
@@ -180,8 +183,45 @@ public class SecureSystem {
                 }
             }
 
+            String receivedMessage = this.decryptLyleReceivedMessage();
+            writeLyleReceivedMessageToOutputFile(outputFileName, receivedMessage);
+
         } catch (IOException ex) {
-            Logger.getLogger(SecureSystem.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(SecureSystem.class
+                    .getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    private String decryptLyleReceivedMessage() {
+        List<Character> readedBytes = getSubject("lyle").getReadedBytes();
+        String receivedMessage = "";
+        int firstIndex = 0;
+        int lastIndex = 8;
+
+        for (int i = 0; i < readedBytes.size() / 8; i++) {
+            List<Character> aByte = readedBytes.subList(firstIndex, lastIndex);
+            String aByteInString = "";
+            for (int j = 0; j < aByte.size(); j++) {
+                aByteInString += aByte.get(j);
+            }
+            int a = Integer.parseInt(aByteInString, 2);
+            receivedMessage += (char) (a);
+            firstIndex += 8;
+            lastIndex += 8;
+        }
+
+        return receivedMessage;
+    }
+
+    private void writeLyleReceivedMessageToOutputFile(String outputFileName, String receivedMessage) {
+        try {
+            FileWriter myWriter = new FileWriter(outputFileName);
+            myWriter.write(receivedMessage);
+            myWriter.close();
+            System.out.println("Lyle received message was stored in: " + outputFileName);
+        } catch (IOException ex) {
+            Logger.getLogger(SecureSystem.class
+                    .getName()).log(Level.SEVERE, null, ex);
         }
     }
 }
